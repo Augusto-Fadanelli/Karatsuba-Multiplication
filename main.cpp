@@ -2,8 +2,12 @@
 #include <string>
 #include <algorithm>
 
+#include<math.h>
+#include <sys\timeb.h>
+
 
 using namespace std;
+using std::string;
 
 string integerMultiplication (string x, string y) {
     //because its multiplication of only one-digit numbers, we can use int
@@ -112,13 +116,37 @@ string karatsuba (string x, string y, int n) {
 
 int main () {
 
-    string x;
-    string y;
+    string x = "";
+    string y = "";
 
-    getline(cin, x);
-    getline(cin, y);
+    struct timeb start, end;
+    int diff;
+    string aleatorio1;
+    string aleatorio2;
+    for (int i=1; i <= 9; i++){
 
-    cout << karatsuba(x, y, x.size());
+        aleatorio1 = "";
+        aleatorio2 = "";
+
+        for(int j=1; j<=pow(2, i)/2; j++){
+            aleatorio1 += to_string(rand() % 9); //first number
+            aleatorio2 += to_string(rand() % 9); //second number
+        }
+        x = aleatorio1;
+        y = aleatorio2;
+
+    ftime(&start);
+
+    //codigo karatsuba
+    cout << x << endl;
+    cout << y << endl;
+    cout << karatsuba(x, y, x.size()) << endl;
 
     //cout << combine(x, y);
+
+    ftime(&end);
+    diff = (int) (1000.0 * (end.time - start.time) + (end.millitm - start.millitm));
+
+    printf("\nExecution time: %u ms\n\n", diff);
+    }
 }
